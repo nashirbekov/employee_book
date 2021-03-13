@@ -1,0 +1,171 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body">
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt--7">
+
+      <div class="row">
+          <div class="card" style="width: 30rem;">
+                <img src="{{ employee.image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+
+                </div>
+            </div>
+        <div class="col-xl-8 order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Информация о сотруднике</h3>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-username">Фамилия Имя Отчество</label>
+                        <div class="card">
+                          <div class="card-body">
+                            {{ employee.lastname }}
+                            {{ employee.firstname}}
+                            {% if employee.middlename %}
+                            {{ employee.middlename }}
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">Номер телефона</label>
+                        <div class="card">
+                          <div class="card-body">
+                            {{ employee.phone_number }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-first-name">Пол</label>
+                        <div class="card">
+                          <div class="card-body">
+                            {{ employee.gender }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-last-name">Возраст</label>
+                        <div class="card">
+                          <div class="card-body">
+                            {{ employee.age }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-username">Город</label>
+                        <div class="card">
+                          <div class="card-body">
+                              {{ employee.city }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">Email</label>
+                        <div class="card">
+                          <div class="card-body">
+                            {{ employee.email }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-first-name">Статус работы</label>
+                        <div class="card">
+                          <div class="card-body">
+                            {{ employee.work_status }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-last-name">Дата приема на работу</label>
+                        <div class="card">
+                          <div class="card-body">
+                            {{ employee.employment_date }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+              <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-username">Дата увольнения</label>
+                        <div class="card">
+                          <div class="card-body">
+                              {% if employee.date_of_dismissal %}{{ employee.date_of_dismissal }}{% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">Стаж работы</label>
+                        <div class="card">
+                          <div class="card-body">
+                            {{ view.count_date }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

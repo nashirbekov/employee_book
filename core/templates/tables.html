@@ -1,0 +1,132 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body">
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt--7">
+
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <h3 class="mb-0">Сотрудники</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col"><h4>ФИО</h4></th>
+                    <th scope="col"><h4>Номер телефона</h4></th>
+                      <th scope="col"><h4>Пол</h4></th>
+                      <th scope="col"><h4>Город</h4></th>
+                      <th scope="col"><h4>Возраст</h4></th>
+                      <th scope="col"><h4>Статус работы</h4></th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                {% for employee in employee_list %}
+                  <tr>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                            <span class="mb-0 text-sm"><a href="{% url 'detail' employee.id%}">{{ employee.firstname }} {{ employee.lastname }}</a></span>
+                        </div>
+                      </div>
+                    </th>
+                    <td>
+                      {{ employee.phone_number }}
+                    </td>
+                      <td>
+                      {{ employee.gender }}
+                    </td>
+                      <td>
+                      {{ employee.city }}
+                    </td>
+                      <td>
+                      {{ employee.age }}
+                    </td>
+                      <td>
+                      {{ employee.work_status }}
+                    </td>
+                  </tr>
+                {% endfor %}
+
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+              <nav aria-label="...">
+                <ul class="pagination justify-content-end mb-0">
+{#                  <li class="page-item disabled">#}
+{#                    <a class="page-link" href="#" tabindex="-1">#}
+{#                      <i class="fas fa-angle-left"></i>#}
+{#                      <span class="sr-only">Previous</span>#}
+{#                    </a>#}
+{#                  </li>#}
+                    {% if page_obj.has_previous %}
+                     {% if page_obj.number|add:'-3' > 1 %}
+                  <li class="page-item active">
+                    <a class="page-link" href="?{{ q }}{{ city }}{{ work_status }}page=1">1</a>
+                  </li>
+                    {% endif %}
+                {% if page_obj.number|add:'-3' >= 3 %}
+                  <li class="page-item">
+                    <a class="page-link" href="?{{ q }}{{ city }}{{ work_status }}page={{ page_obj.previous_page_number|add:'-3' }}"><span class="sr-only">...</span></a>
+                  </li>
+                {% endif %}
+        {% endif %}
+        {% if paginator.page_range|length > 1 %}
+        {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+                  <li class="page-item"><a class="page-link" href="#">{{ i }}</a></li>
+                {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                  <li class="page-item">
+                    <a class="page-link" href="?{{ q }}{{ city }}{{ work_status }}page={{ i }}">
+                      {{ i }}
+                    </a>
+                  </li>
+                {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% if page_obj.has_next %}
+        {% if page_obj.number|add:'4' < page_obj.paginator.num_pages %}
+                <li class="page-item">
+                <a href="?{{ q }}{{ city }}{{ work_status }}page={{ page_obj.next_page_number|add:'3' }}">
+                <span class="page-link">...</span>
+            </a>
+                </li>
+                {% endif %}
+        {% if page_obj.number|add:'3' < page_obj.paginator.num_pages %}
+                <li class="page-item">
+                <a href="?{{ q }}{{ city }}{{ work_status }}page={{ page_obj.next_page_number|add:'3' }}">
+                {{ page_obj.paginator.num_pages }}
+            </a>
+                </li>
+                {% endif %}
+        {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}
