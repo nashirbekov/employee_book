@@ -9,7 +9,7 @@ from django.db import models
 # Create your models here.
 class City(models.Model):
     """Города"""
-    name = models.CharField("Город", max_length=150)
+    name = models.CharField("Город", unique=True, max_length=150)
 
     def __str__(self):
         return self.name
@@ -33,6 +33,11 @@ class WorkStatus(models.Model):
 
 class Employee(models.Model):
     """Сотрудник"""
+    g_choice = (
+        ('М', 'Мужской'),
+        ('Ж', 'Женский')
+
+    )
     lastname = models.CharField("Фамилия", max_length=150)
     firstname = models.CharField("Имя", max_length=150)
     middlename = models.CharField("Отчество", max_length=150, blank=True, null=True)
@@ -40,7 +45,7 @@ class Employee(models.Model):
     phone_number = models.CharField("Номер телефона", max_length=14, default="+996 ")
     city = models.ForeignKey(City, verbose_name="Город", on_delete=models.SET_NULL, null=True)
     age = models.PositiveSmallIntegerField("Возраст")
-    gender = (models.CharField("Пол", max_length=100))
+    gender = models.CharField("Пол", choices=g_choice, max_length=10)
     email = models.EmailField("Email")
     work_status = models.ForeignKey(WorkStatus, verbose_name="Статус работы", on_delete=models.SET_NULL, null=True)
     employment_date = models.DateField("Дата приема на работу")

@@ -13,7 +13,7 @@ from .models import Employee, City, WorkStatus
 class EmployeeAdmin(admin.ModelAdmin):
     """Сотрудник"""
 
-    list_display = ("lastname", "firstname", "middlename", "phone_number", "city", "age", "gender", "email", "work_status", "user")
+    list_display = ("lastname", "firstname", "middlename", "phone_number", "age", "gender", "email", "user")
 
 @admin.register(City)
 class CityAdmin(admin.ModelAdmin):

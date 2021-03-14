@@ -6,16 +6,17 @@ Copyright (c) 2019 - present AppSeed.us
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django import template
 import datetime
 from django.shortcuts import render
+from django.db.models import Count
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
@@ -91,7 +92,7 @@ class FilterEmployeeView(EmployeeListView, ListView):
 
 class EmployeeDetailView(PermissionRequiredMixin, DetailView):
     """Подробная инфа о сотруднике"""
-    permission_required = 'employees.view_employee'
+    permission_required = 'app.view_employee'
     model = Employee
     template_name = "employee_detail.html"
 
@@ -127,22 +128,14 @@ class Search(LoginRequiredMixin, ListView):
         context["q"] = f'q={self.request.GET.get("q")}&'
         return context
 
-class EmployeeCountView(EmployeeListView):
+
+
+class ChartView(TemplateView):
     template_name = "index.html"
 
-    def get_employees_quantity(self):
-        return Employee.objects.all().count()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context["qs"] = Employee.objects.values('city').annotate(city_count=Count('city')).order_by('-city_count')
+        context["qs"] = Employee.objects.values('city')
+        return context
 
-def pie_chart(request):
-    labels = []
-    data = []
-
-    queryset = Employee.objects.order_by('gender')
-    for employee in queryset:
-        labels.append(employee.name)
-        data.append(employee.gender)
-
-    return render(request, 'index.html', {
-        'labels': labels,
-        'data': data,
-    })
