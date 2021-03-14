@@ -9,7 +9,7 @@ var components = {
   "themes": {
     "meta": {
       "path": "themes/{id}.css",
-      "link": "index.html?theme={id}",
+      "link": "chart.html?theme={id}",
       "exclusive": true
     },
     "prism": {

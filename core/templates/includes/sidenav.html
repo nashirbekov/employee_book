@@ -44,15 +44,10 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class=" nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'chart' %}"> <i
-              class="ni ni-tv-2 text-primary"></i> Dashboard
+              class="ni ni-tv-2 text-primary"></i> Дашборд
           </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="/profile.html">
-            <i class="ni ni-single-02 text-yellow"></i> User profile
-          </a>
-        </li>
         <li class="nav-item">
           <a class="nav-link {% if 'tables' in segment %} active {% endif %}" href="{% url 'employees' %}">
             <i class="ni ni-bullet-list-67 text-info"></i> Сотрудники
@@ -67,6 +62,7 @@
       </ul>
       <!-- Divider -->
       <hr class="my-3">
+    {% if view.get_cities or view.get_work_status %}
       <form action="{% url 'filter' %}" method="get" name="filter">
         <h4>Города</h4>
         <ul class="navbar-nav">
@@ -94,6 +90,7 @@
         <br>
         <button type="submit" class="btn btn-primary">Найти</button>
       </form>
+    {% endif %}
       <hr class="my-3">
     </div>
   </div>
